@@ -17,6 +17,7 @@
     * [`Version_Reply(version)`](#version_replyversion)
     * [`Max_Length()`](#max_length)
     * [`Max_Length_Reply()`](#max_length_replymax_length)
+* [Application commands](#application-commands)
 
 ## Generalities
 
@@ -101,12 +102,15 @@ a too long frame is received, the device **MUST** send a
 `0x07` | [`Version_Reply(version)`](#version_replyversion)
 `0x08` | [`Max_Length()`](#max_length)
 `0x09` | [`Max_Length_Reply()`](#max_length_replymax_length)
+`0x0A-0x1F` | *Reserved*
 
 In the following subsections, commands are referred as functions taking zero or
 more arguments. Each command comes with a description, a type, a length and a
 value if appropriate. Then follows its expected behaviour.
 
 All built-in commands **MUST** be implemented if not stated otherwise.
+
+Reserved command types **MUST NOT** be used in application code.
 
 ### `Ping()`
 
@@ -294,3 +298,22 @@ This command **MUST NOT** be sent if not replying to
 
 A device receiving this command without waiting for it **SHOULD** reply with a
 [`Nack(UNKNOWN_COMMAND)`](#nackreason).
+
+## Application commands
+
+Application commands are commands defined by any application using ERCP Basic.
+
+ERCP Basic implementations **MUST** provide a way to register application
+commands with a type and a callback.
+
+An application command **MUST** have a type and a callback function or
+procedure.
+
+An application command **MUST NOT** use the same type as a built-in command or
+any reserved value.
+
+An application command **MAY** perform any action. On receiving the command or
+after a successful processing, an application command **SHOULD** send an
+[`Ack()`](#ack). If there is a problem, it **SHOULD** send a
+[`Nack(reason)`](#nackreason). The `reason` **SHOULD** be a built-in value if
+appropriate and **MAY** be a custom value otherwise.
