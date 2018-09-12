@@ -105,6 +105,7 @@ a too long frame is received, the device **MUST** send a
 `0x0A-0x0F` | *Reserved*
 `0x10` | [`Description()`](#description)
 `0x11` | [`Description_Reply(description)`](#description_replydescription)
+`0x12-0x1F` | *Reserved*
 
 In the following subsections, commands are referred as functions taking zero or
 more arguments. Each command comes with a description, a type, a length and a
