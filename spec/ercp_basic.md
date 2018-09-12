@@ -245,12 +245,12 @@ A device receiving this command **MUST** reply with a
 
 ### `Version_Reply(version)`
 
-* **Description:** Replies to [`Version(component)`](#versioncomponent)
+* **Description:** Replies to [`Version(component)`](#versioncomponent).
 * **Type:** `0x07`
 * **Length:** *Variable*
 * **Value:**
-    * `version` on *Length* bytes: a string of characters. It **SHOULD NOT** be
-        null-terminated.
+    * `version` on *Length* bytes: an UTF-8 string of characters. It **SHOULD
+        NOT** be null-terminated.
 
 This command **MUST** be sent after a [`Version(component)`](#versioncomponent)
 command has been received. If the `component` is unknown or not implemented,
@@ -283,7 +283,7 @@ A device receiving this command **MUST** reply with a
 
 ### `Max_Length_Reply(max_length)`
 
-* **Description:** Replies to [`Max_Length()`](#max_length)
+* **Description:** Replies to [`Max_Length()`](#max_length).
 * **Type:** `0x09`
 * **Length:** 1
 * **Value:**
