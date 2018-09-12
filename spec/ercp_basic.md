@@ -102,7 +102,9 @@ a too long frame is received, the device **MUST** send a
 `0x07` | [`Version_Reply(version)`](#version_replyversion)
 `0x08` | [`Max_Length()`](#max_length)
 `0x09` | [`Max_Length_Reply()`](#max_length_replymax_length)
-`0x0A-0x1F` | *Reserved*
+`0x0A-0x0F` | *Reserved*
+`0x10` | [`Description()`](#description)
+`0x11` | [`Description_Reply(description)`](#description_replydescription)
 
 In the following subsections, commands are referred as functions taking zero or
 more arguments. Each command comes with a description, a type, a length and a
@@ -295,6 +297,36 @@ device.
 
 This command **MUST NOT** be sent if not replying to
 [`Max_Length()`](#max_length).
+
+A device receiving this command without waiting for it **SHOULD** reply with a
+[`Nack(UNKNOWN_COMMAND)`](#nackreason).
+
+### `Description()`
+
+* **Description:** Gets the device description.
+* **Type:** `0x10`
+* **Length:** 0
+
+This command **MAY** be used to get a description about the device. It **MAY**
+be used to get the correct set of useable application commands.
+
+A device receiving this command **MUST** reply with a
+[`Description_Reply(description)`](#description_replydescription).
+
+### `Description_Reply(description)`
+
+* **Description:** Replies to [`Description()`](#description).
+* **Type:** `0x11`
+* **Length:** *Variable*
+* **Value:**
+    * `description` on *Length* bytes: an UTF-8 string of characters. It
+        **SHOULD NOT** be null-terminated.
+
+This command **MUST** be sent after a [`Description()`](#description) command
+has been received. `description` **MAY** be any valid string.
+
+This command **MUST NOT** be sent if not replying to
+[`Description()`](#description).
 
 A device receiving this command without waiting for it **SHOULD** reply with a
 [`Nack(UNKNOWN_COMMAND)`](#nackreason).
