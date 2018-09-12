@@ -252,7 +252,7 @@ A device receiving this command **MUST** reply with a
 * **Type:** `0x07`
 * **Length:** *Variable*
 * **Value:**
-    * `version` on *Length* bytes: an UTF-8 string of characters. It **SHOULD
+    * `version` on *Length* bytes: a UTF-8 string of characters. It **SHOULD
         NOT** be null-terminated.
 
 This command **MUST** be sent after a [`Version(component)`](#versioncomponent)
@@ -320,8 +320,8 @@ A device receiving this command **MUST** reply with a
 * **Type:** `0x11`
 * **Length:** *Variable*
 * **Value:**
-    * `description` on *Length* bytes: an UTF-8 string of characters. It
-        **SHOULD NOT** be null-terminated.
+    * `description` on *Length* bytes: a UTF-8 string of characters. It **SHOULD
+        NOT** be null-terminated.
 
 This command **MUST** be sent after a [`Description()`](#description) command
 has been received. `description` **MAY** be any valid string.
