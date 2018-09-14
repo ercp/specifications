@@ -82,7 +82,9 @@ CRC is valid, the device **MUST** call the command callback corresponding to the
 *Type*. If the CRC is invalid or the command type is not implemented, the device
 **MUST** send a [`Nack(reason)`](#nackreason).
 
-A device receiving an incomplete frame... **To be determined**.
+A device receiving an incomplete frame **SHOULD** start a timeout. If the
+implementation allows it, it **SHOULD** discard the frame after the timeout has
+been reached.
 
 A device **MAY** set a maximum acceptable *Length* inferior to 255. In the case
 a too long frame is received, the device **MUST** send a
