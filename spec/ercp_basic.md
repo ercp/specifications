@@ -4,8 +4,10 @@
 
 * [Generalities](#generalities)
 * [Frame format](#frame-format)
+    * [General description](#general-description)
     * [Fields](#fields)
-    * [Implementation](#implementation)
+    * [Specification](#specification)
+* [Behaviour on reception](#behaviour-on-reception)
 * [Build-in commands](#built-in-commands)
     * [`Ping()`](#ping)
     * [`Ack()`](#ack)
@@ -26,7 +28,7 @@ and easy-to-implement yet reliable communication with embedded systems.
 
 ## Frame format
 
-Frames **MUST** follow the format described below.
+### General description
 
 * *The frame reads top to bottom*
 * *Each cell represents an octet*
@@ -68,12 +70,34 @@ Frames **MUST** follow the format described below.
     [built-in](#built-in-commands) and the protocol is made to be extended by
     application commands handled by user callbacks.
 * **Length:** The length of the *Value* field.
-* **Value:** A field containing additional data. **MUST** be *Length*-bytes
-    long.
-* **CRC:** CRC for the *Type*, *Length* and *Value* fiels combined. **Its
-    computation is yet to be determined.**
+* **Value:** A field containing additional data.
+* **CRC:** CRC for the *Type*, *Length* and *Value* fiels combined.
 
-### Implementation
+### Specification
+
+A frame **MUST** start with a 5-byte start sequence composed, in order, by the
+`E`, `R`, `C`, `P` and `B` ASCII characters.
+
+Immediately after the start sequence, a 2-byte header **MUST** be present. The
+first byte represents the *Type* field, while the second represents the *Length*
+field. The *Type* field **MAY** be any value. It **SHOULD** be a valid command
+type, understood by the receiving device. The *Length* field **MUST** be the
+length of the payload. It **MAY** be 0.
+
+Immediately after the header, a payload **MAY** be present. It represents the
+*Value* field. If it is not present, the *Length* field **MUST** be 0. If it is
+present, its length **MUST** be equal to the *Length* field.
+
+Immediately after the payload **MUST** follow a CRC. The CRC **MUST** be
+computed using the CRC-8-CCITT polynomial on the concatenation of the *Type*,
+*Length* and *Value* fields. The CRC calculation **SHOULD** be performed with a
+256 lookup table for performance reasons. However, it **MAY** be computed
+directly if space is an issue.
+
+Immediately after the CRC, the `EOT` ASCII character (`0x04`) **MUST** be
+present.
+
+## Behaviour on reception
 
 A device receiving an incorrectly formatted frame **MUST** ignore it.
 
