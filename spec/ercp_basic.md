@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+* [Version](#version)
 * [Generalities](#generalities)
 * [Frame format](#frame-format)
     * [General description](#general-description)
@@ -20,6 +21,10 @@
     * [`Max_Length()`](#max_length)
     * [`Max_Length_Reply()`](#max_length_replymax_length)
 * [Application commands](#application-commands)
+
+## Version
+
+This document describes ERCP Basic 0.1.0.
 
 ## Generalities
 
