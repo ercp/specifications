@@ -21,6 +21,7 @@
     * [`Max_Length()`](#max_length)
     * [`Max_Length_Reply()`](#max_length_replymax_length)
 * [Application commands](#application-commands)
+* [Component versions](#component-versions)
 
 ## Version
 
@@ -381,3 +382,11 @@ after a successful processing, an application command **SHOULD** send an
 [`Ack()`](#ack). If there is a problem, it **SHOULD** send a
 [`Nack(reason)`](#nackreason). The `reason` **SHOULD** be a built-in value if
 appropriate and **MAY** be a custom value otherwise.
+
+## Component versions
+
+The [`Version(component)`](#versioncomponent) command makes possible to get the
+version of an arbitrary component.
+
+ERPC Basic implementations **MUST** provite a way to register components with
+their version.
