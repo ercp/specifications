@@ -20,6 +20,7 @@
     * [`Version_Reply(version)`](#version_replyversion)
     * [`Max_Length()`](#max_length)
     * [`Max_Length_Reply()`](#max_length_replymax_length)
+    * [`Log(message)`](#logmessage)
 * [Application commands](#application-commands)
 * [Component versions](#component-versions)
 
@@ -138,6 +139,7 @@ a too long frame is received, the device **MUST** send a
 `0x10` | [`Description()`](#description)
 `0x11` | [`Description_Reply(description)`](#description_replydescription)
 `0x12-0x1F` | *Reserved*
+`0xFF` | [`Log(message)`](#logmessage)
 
 In the following subsections, commands are referred as functions taking zero or
 more arguments. Each command comes with a description, a type, a length and a
@@ -363,6 +365,20 @@ This command **MUST NOT** be sent if not replying to
 
 A device receiving this command without waiting for it **SHOULD** reply with a
 [`Nack(UNKNOWN_COMMAND)`](#nackreason).
+
+### `Log(message)`
+
+* **Description:** Logs a message.
+* **Type:** `0xFF`
+* **Length:** *Variable*
+* **Value:**
+    * `message` on *Length* bytes: a UTF-8 string of characters. It **SHOULD
+        NOT** be null-terminated.
+
+This command **MAY** be used to send logs.
+
+A device receiving this command **MUST** reply with an [`Ack()`](#ack). It
+**MAY** print `message` on a terminal or in a file.
 
 ## Application commands
 
